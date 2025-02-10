@@ -1,0 +1,239 @@
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+docker run hello-world
+usermod -aG docker student
+sudo usermod -aG docker student
+id
+docker run hello-world
+docker ps 
+docker ps -a 
+sudo -i
+docker run --help
+docker run httpd
+docker ps -a
+docker run -d httpd
+docker ps -a
+docker ps 
+docker ps -a
+docker ps --all
+docker ps --latest
+docker run -it nginx /bin/bash
+docker ps -a
+docker run -d --name web1 -e TESTVAR1=testvalue1 --restart=always nginx:1.19.2 
+sudo ls -la /var/lib/docker/overlay2
+sudo ls -la /var/lib/docker/overlay2 | grep ced3f165c5d
+docker ps 
+sudo ls -la /var/lib/docker/overlay2 | grep ef3edd0cde70
+docker inspect web1
+sudo ls -la /var/lib/docker/overlay2/0ab473ed488be36a283f0770d3e4005dcc4f228dc7ae97e804902db024a3304f/diff
+docker inspect nginx:latest
+docker exec -it web1 uptime 
+docker exec -it web1 ls -la 
+docker exec -it web1 bash
+sudo ls -la /var/lib/docker/overlay2/0ab473ed488be36a283f0770d3e4005dcc4f228dc7ae97e804902db024a3304f/diff
+ls -la /etc/hosts
+docker exec -it -u 0 web1 bash
+docker exec -it -u 0 web1 touch /file2
+docker exec -it -u 0 web1 mkdir testDir222
+sudo ls -la /var/lib/docker/overlay2/0ab473ed488be36a283f0770d3e4005dcc4f228dc7ae97e804902db024a3304f/diff
+docker ps 
+docker ps -a
+docker stop web1
+docker ps -a
+docker start web1
+docker ps -a
+docker restart web1
+docker ps -a
+docker rename web1 web
+docker ps 
+docker pause web 
+docker ps 
+docker unpause web 
+docker ps 
+docker rm web
+docker -f rm web
+docker rm -f web
+sudo ls -la /var/lib/docker/overlay2/0ab473ed488be36a283f0770d3e4005dcc4f228dc7ae97e804902db024a3304f/diff
+docker ps -a
+docker container prune -a
+docker container prune --help
+docker container prune
+docker ps -a
+docker logs 04487bc225e4  
+docker logs 04487bc225e4  -f
+docker logs --help
+docker logs 04487bc225e4  -t
+docker logs 04487bc225e4 -n 1
+docker top cranky_euler 
+docker exec -it cranky_euler bash
+docker top cranky_euler 
+docker inspect cranky_euler 
+docker inspect --format '{{.NetworkSettings.IPAddress }}' cranky_euler 
+docker run -d --name u22 ubuntu:22.04
+docker ps
+docker ps -a
+docker logs u22
+docker inspect 
+docker inspect ubuntu:22.04
+docker run -d --name u18 --entrypoint=tail ubuntu:22.04 -f /dev/null
+docker ps -a
+docker exec -it u18 bash
+docker top u18
+docker inspect u18
+ping 172.17.0.3
+shh 172.17.0.3
+ssh 172.17.0.3
+alias 
+docker logs
+docker logs --help
+docker inspect --help
+docker run --help
+docker ps
+docker inspect 04
+docker ps 
+docker rename cranky_euler u18
+uname -r
+docker exec -it u18
+docker exec -it u18 bash
+docker search centos
+wget https://github.com/docker/hub-tool/releases/download/v0.4.6/hub-tool-linux-amd64.tar.gz
+tar -xvf hub-tool-linux-amd64.tar.gz
+sudo install hub-tool/hub-tool /usr/bin/
+hub-tool login
+hub-tool tag ls centos
+docker pull centos:centos8.4.2105
+docker images
+docker image ls
+docker rmi 97662d24417b
+docker image ls
+docker image remove nginx:1.19.2
+docker image ls
+docker pull centos:6.9
+docker image ls
+\
+docker image prune 
+docker image ls
+docker image prune --help
+docker image prune --all
+docker image ls
+docker ps 
+docker run -d --name web -p 80:80 nginx:1.19.2
+docker ps 
+ip a 
+docker exec -it web -- bash
+docker exec -it web bash
+docker commit -a "
+docker commit --help
+docker commit -a "marcin" -m "nowy nginx dla trenerow" a6
+docker image ls
+docker tag bf124822e528 mynginx:0.1
+docker image ls
+docker run -d --name custom_web -p 8080:80 mynginx:0.1 
+docker diff --help
+docker diff bf124822e528
+docker diff 3a78f
+docker login -u markuj5@gmail.com
+cat /home/student/.docker/config.json
+docker image ls
+docker push mynginx:0.1 
+docker push marcinkujawski/mynginx:0.1 
+docker tag bf124822e528  marcinkujawski/mynginx:0.1
+docker image ls
+docker push marcinkujawski/mynginx
+docker push marcinkujawski/mynginx:0.1
+docker logout
+cat /home/student/.docker/config.json
+docker login quay.io -u marcin_kujawski
+docker image ls
+docker tag bf124822e528 marcin_kujawski/mynginx:0.1
+docker push marcin_kujawski/mynginx:0.1
+docker push quay.io/marcin_kujawski/mynginx:0.1
+docker tag bf124822e528 quay.io/marcin_kujawski/mynginx:0.1 
+docker push quay.io/marcin_kujawski/mynginx:0.1
+docker logout
+sudo mkdir /etc/docker/certs.d/harbor.lab.local
+sudo mkdir -p /etc/docker/certs.d/harbor.lab.local
+sudo vi /etc/docker/certs.d/harbor.lab.local/ca.crt
+sudo systemctl restart docker
+docker image ls
+docker tag bf124822e528 harbor.lab.local/library/mynginx:0.1
+sudo vi /etc/hosts
+docker login https://harbor.lab.local
+docker push harbor.lab.local/library/mynginx:0.1
+docker build --help
+mkdir /tmp/test && touch /tmp/test/file1 && apt-get update && apt-get install -y curl 
+mkdir /tmp/test && touch /tmp/test/file1 && sudo apt-get update && sudo apt-get install -y curl 
+rm -rf /tmp/test
+mkdir /tmp/test && touch /tmp/test/file1 && sudo apt-get update && sudo apt-get install -y curl 
+git clone https://github.com/mariano-italiano/lx-d_Feb.git
+cd lx-d_Feb/
+mkdir custom-nginx
+cd custom-nginx
+vi Dockerfile
+vi index.html
+vi default.conf
+htpasswd -c .htpasswd 
+sudo apt install apache2-utils -y
+htpasswd -c .htpasswd 
+htpasswd -c .htpasswd kasia
+cat .htpasswd 
+ls -la
+docker build -t custom-nginx:1.0 .
+docker run -d --name custom-nginx -p 8081:80 custom-nginx:1.0
+docker ps
+cd ..
+mkdir custom-ubuntu
+cd custom-ubuntu
+vi Dockerfile
+docker build -t custom-ubuntu:0.1 .
+docker image ls
+docker run -d --name ubuntu-custom ubuntu-custom:0.1
+docker run -d --name ubuntu-custom custom-ubuntu:0.1
+docker ps 
+docker ps -a
+docker logs custom-nginx 
+docker logs ubuntu-custom 
+vi Dockerfile 
+docker rmi fbc26e4f298a
+docker rmi fbc26e4f298a -f
+docker rm ubuntu-custom 
+docker build -t custom-ubuntu:0.2 .
+docker run -d --name ubuntu-custom custom-ubuntu:0.2
+docker ps -a
+docker logs af7b3efb23e5
+vi Dockerfile 
+docker build -t custom-ubuntu:1.0 .
+docker run -d --name ubuntu-live custom-ubuntu:1.0
+docker ps 
+docker ps -a
+docker logs 590cbe61a1b0
+vi Dockerfile 
+docker rm -f 590cbe61a1b0
+docker image ls
+docker rmi 230aa084900d
+docker build -t custom-ubuntu:1.0 .
+docker run -d --name ubuntu-live custom-ubuntu:1.0
+docker ps
+docker exec -it f17 bash
+docker exec -it -u 0 f17 bash
+docker exec -it f17 bash
+docker exec -it -u 0 f17 cat /etc/shadow
+docker exec -it f17 bash
+cd ..
+git status
+git add .
+git commit -m "Adding day1 files"
+git config --global user.email "markuj5@gmail.com"
+git config --global credential.helper store 
+git commit -m "Adding day1 files"
+git push
+6
+history
+history | awk '$1 > 20' | cut -c 8- > day1-history.txt
