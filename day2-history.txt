@@ -1,0 +1,362 @@
+ls -la
+mkdir python-app
+cd python-app
+vi Dockerfile
+vi requirements.txt
+vi app.py
+python3 app.py
+docker build -t python-app:1.0 .
+vi Dockerfile
+docker build -t python-app:1.1 .
+vi Dockerfile
+docker ps -a
+docker ps
+docker run -d --name python-app -p 80:80 python-app:1.1
+docker ps
+docker exec -it python-app bash
+git pull
+git checkout develop 
+cd ..
+ls -la
+git pull
+git status
+git checkout master
+git status
+git add python-app/
+git status
+git commit -m "Add container"
+git push
+git checkout develop
+ls -la
+rm -rf custom-nginx custom-ubuntu day1-history.txt docker-notes.md install-harbor.sh
+ls -la
+mkdir web-content
+cd web-content/
+mkdir images
+mkdir csss
+mv csss css
+vi index.html
+git status
+cd ..
+git status
+git add .
+git status
+git commit -m "adding web-content to develop"
+git push
+git pull
+git checkout acceptance 
+cd web-content/
+mkdir css
+touch css/styels.css
+touch images/image1.jpg
+vi index.html 
+git status
+git add .
+git commit -m "Add web-content acc"
+git push
+cd 
+cd lx-d_Feb/
+git checkout amster
+git checkout master 
+ls -la
+mkdir nginx
+cd nginx/
+vi Dockerfile
+docker build -t my-nginx:1.0 .
+docker run -d --name my-nginx-dev -p 8080:80 my-nginx:1.0
+docker ps
+vi Dockerfile 
+docker build -t my-nginx:1.1 --build-arg NGINX_CONTENT_BRANCH="acceptance" .
+docker run -d --name my-nginx-acc -p 8081:80 my-nginx:1.1
+docker ps
+docker exex -it ad bash
+docker exec -it ad bash
+docker ps
+docker exec -it 89 bash
+cd ..
+mkdir postfix
+cd postfix
+vi Dockerfile
+mv Dockerfile Dockerfile-postfix
+ls -la 
+docker build -t my-mail:1.0 .
+docker build -t my-mail:1.0 -f Dockerfile-postfix 
+docker build -t my-mail:1.0 -f Dockerfile-postfix .
+ls- l
+ls -la
+vi main.cf
+docker build -t my-mail:1.0 -f Dockerfile-postfix .
+docker run -d --name my-mail my-mail:1.0
+docker ps
+docker logs my-mail 
+docker logs my-nginx-dev 
+vi Dockerfile-postfix 
+docker build -t my-mail:0.1 -f Dockerfile-postfix .
+docker run -d --name my-mail-dev my-mail:0.1
+docker ps
+docker logs my-mail-dev
+docker exec -it my-mail-dev basg
+docker exec -it my-mail-dev bash
+cd ..
+mkdir centos
+cd centos/
+vi Dockerfile
+docker build -t my-centos:1.0 .
+cd ..
+git status
+git add .
+git commit -m "Add day2 content"
+git push
+docker inspect my-mail
+ip a 
+docker exec -it my-mail-dev bash
+docker ps
+docker inspect my-mail | grep -i address
+docker inspect my-mail-dev | grep -i address
+docker exec -it my-mail-dev bash
+docker network ls
+docker network create --help
+docker network create custombridge 
+docker network ls
+ip a s
+ip a s | grep 8cbf271172d1
+docker run -d --name netshoot1 -it --network custombridge nicolaka/netshoot bash
+docker run -d --name netshoot2 -it --network custombridge nicolaka/netshoot bash
+docker ps
+docker exec -it netshoot1 bash
+docker inspect netshoot1
+docker inspect netshoot2
+docker inspect my-mail
+docker exec -it netshoot1 bash
+docker run -d --name web-server --network host nginx
+docker ps 
+docker ps -a
+docker logs web-server
+docker stop python-app
+docker start web-server 
+docker ps -a
+docker ps 
+ss -vatlp
+ss -vatp
+ss -atnlp
+docker exec -it web-server bash
+docker ps -a
+docker start python-app
+docker run -d --name web-server2 -p 80:80 nginx
+docker network create -d macvlan --subnet 192.168.1.0/24 --gateway 192.168.1.1 --ip-range 192.168.1.120/32 -o parent=ens33 macvlan1
+docker network list
+ip a | grep 273c18b57d27
+ip a | grep 8cbf271172d1
+docker run -d --name web-server2 --network macvlan1 nginx
+docker rm -f web-server1
+docker rm -f web-server
+docker run -d --name web-server2 --network macvlan1 nginx
+docker rm -f web-server2
+docker run -d --name web-server --network host nginx
+docker run -d --name web-server2 nginx
+docker rm -f web-server2
+docker run -d --name web-server2 --network host nginx
+docker ps 
+docker ps -a
+docker run -d --name web-server3 -p 80:80 nginx
+docker ps -a
+docker run -d --name web-server4 --network macvlan1 nginx
+docker ps 
+docker inspect web-server4
+docker run -d --name web-server5 --network macvlan1 nginx
+docker run -d --name web-server5 --network macvlan1 --ip 192.168.1.121 nginx
+docker rm -f web-server5
+docker run -d --name web-server5 --network macvlan1 --ip 192.168.1.121 nginx
+docker ps 
+docker inspect web-server5
+docker exec -it web-server5 basg
+docker exec -it web-server5 bash
+docker ps 
+docker inspect 89b5f5b7972c
+docker ps 
+docker exec -it my-mail bash
+iptables -L -v -n
+sudo iptables -L -v -n
+docker network ls
+sudo iptables -I DOCKER-USER -i docker0 -o br-8cbf271172d1  -j ACCEPT 
+sudo iptables -I DOCKER-USER -i br-8cbf271172d1 -o docker0  -j ACCEPT 
+sudo iptables -L -v -n
+docker exec -it my-mail bash
+sudo iptables-save /tmp/test
+docker network create custombridge2
+ip a
+sudo iptables -I DOCKER-USER -s 172.18.0.3 -d 172.19.0.2  -j ACCEPT 
+docker run -d --name netshoot-test --network custombridge2 nicolaka/ntshoot 
+docker run -d --name netshoot-test --network custombridge2 nicolaka/netshoot 
+docker ps
+docker rm -f netshoot-test; docker run -dit --name netshoot-test --network custombridge2 nicolaka/netshoot bash
+docker ps
+docker inspect netshoot-test 
+docker exec -it netshoot-test bash
+docker exec -it netshoot2 bash
+docker network list
+sudo iptables -I DOCKER-USER -i br-7480cf307dde -o br-8cbf271172d1 -s 172.18.0.3 -d 172.19.0.2  -j ACCEPT 
+docker exec -it netshoot2 bash
+sudo iptables -L -v -n
+sudo iptables -I DOCKER-USER -o br-7480cf307dde -i br-8cbf271172d1 -s 172.19.0.2 -d 172.18.0.3  -j ACCEPT 
+sudo iptables -L -v -n
+docker exec -it netshoot2 bash
+docker inspect my-mail
+docker  network connect custombridge
+docker  network connect custombridge my-mail
+docker inspect my-mail
+docker network disconnect bridge my-mail
+docker inspect my-mail
+docker  network connect custombridge2 my-mail
+docker exec -it my-mail bash
+docker  network disconnect custombridge my-mail
+docker inspect my-mail
+docker run -d --name ports1 -p 3128:80 nginx
+docker ps
+docker run -d --name ports1 -P nginx
+docker run -d --name ports2 -P nginx
+docker ps 
+docker ps -a
+docker ps -a |awk '{print $1}'
+docker --help
+docker ps --format '{{.Names}}'
+for i in docker ps --format '{{.Names}}'; do echo $i; done
+for i in `docker ps --format '{{.Names}}'`; do echo $i; done
+for i in `docker ps --format '{{.Names}}'`; do docker rm -f $i; done
+docker container prune 
+docker ps -a
+docker run -d --name web-anon -v /data nginx
+docker ps
+docker exec -it web-anon bash
+docker volume ls
+sudo ls -la /var/lib/docker/volumes
+sudo ls -la /var/lib/docker/volumes/2b4ec2e64043e9b0a166f45834e71017ae283777e47cbe19190c3de752ff83ec/
+sudo ls -la /var/lib/docker/volumes/2b4ec2e64043e9b0a166f45834e71017ae283777e47cbe19190c3de752ff83ec/_data
+docker inspect 2b4ec2e64043e9b0a166f45834e71017ae283777e47cbe19190c3de752ff83ec
+pwd
+docker run -d --name web-hostvolume -v /home/student/lx-d_Feb:/data nginx
+docker volume ls
+dockder ps
+docker ps
+docker exec -it web-hostvolume bash
+ls -la
+mkdir /tmp/test
+ls -la /tmp/test
+cat /etc/group
+cat /etc/group|grep wheel
+groupadd finanse
+sudo groupadd finanse
+sudo chmod 4755 /tmp/test
+sudo chgrp finanse /tmp/test
+ls -la /tmp/test
+touch exmaple-file /tmp/test/
+ls -la /tmp/test/
+rm exmaple-file 
+touch /tmp/test/exmaple-file
+ls -la /tmp/test/
+sudo chmod 2755 /tmp/test/
+touch /tmp/test/exmaple-file2
+ls -la /tmp/test/
+docker run -d --name test -v /tmp/test:/test nginx
+docker exec -it test 
+docker exec -it test bash
+ls -la /tmp/test/
+sudo ls -la /var/lib/volumes
+sudo ls -la /var/lib/docker/volumes
+docker create volume my_vol1
+docker volume create my_vol1
+docker volume ls
+sudo ls -la /var/lib/docker/volumes
+sudo ls -la /var/lib/docker/volumes/my_vol1/_data
+docker run -d --name web-namedvol -v my_vol1:/data-dir nginx
+docker exec -it web-namedvol bash
+sudo ls -la /var/lib/docker/volumes/my_vol1/_data/
+df -h
+sudo -i
+cat /proc/partitions 
+lvs
+lvssudo 
+sudo lvs
+docker volume create --opt device=/dev/vg_docker/lv_docker --opt type=btrfs docker-vol
+docker volume ls
+docker inspect docker-vol
+docker run -d --name vol-final-test -v docker-vol:/opt nginx
+docker exec -it vol-final-test bash
+docker save --help
+docker image ls
+docker save my-mail:0.1 
+docker save my-mail:0.1 -o mail.tar.gz
+docker save -o mail.tar my-mail:0.1
+ls -alh 
+rm mail.tar.gz
+gzip mail.tar 
+ls -alh 
+mkdir docker-compose
+cd docker-compose
+mkdir page-counter
+cd page-counter
+vi docker-compose.yaml
+vi Dockerfile
+vi requirements.txt
+vi app.py
+docker compose up -d
+docker compose ps 
+docker compose down 
+docker compose up -d
+cd ..
+mkdir multiple-containers
+cd multiple-containers
+vi docker-compose.yaml
+cd ..
+docker compose up -d
+cd multiple-containers/
+docker compose up -d
+docker compose ps -a
+docker logs db
+docker compose down 
+vi docker-compose.yaml 
+docker compose up -d
+docker compose ps -a
+cd ..
+mkdir wordpress
+cd wordpress
+vi docker-compose.yaml
+docker compose up -d
+docker compose down
+docker ps
+cd ..
+docker compose ps
+cd page-counter/
+docker compose ps
+docker compose down
+cd ../wordpress/
+docker compose up -d
+docker compose ps
+docker compose down
+docker compose up
+docker compose up -d
+docker compose down --help
+docker compose down -v
+docker compose up -d
+cd ..
+mkdir mk-app
+cd mk-app
+vi docker-compose.ymal
+vi docker-compose.yaml
+docker ps 
+cd ../wordpress/
+docker compose down 
+cd ../mk-app/
+docker compose up -d
+vi docker-compose.yaml
+docker compose up -d
+docker ps 
+cd ../multiple-containers/
+docker compose down
+cd ../mk-app/
+docker compose down
+docker compose up -d
+docker compose ps
+cd
+history
+history | awk '$1 > 267' | cut -c 8- > lx-d_Feb/day2-history.txt
